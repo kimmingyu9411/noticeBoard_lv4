@@ -77,23 +77,23 @@ router.get("/posts", async (req, res) => {
 });
 
 // 게시글 상세 조회 API
-// router.get("/posts/:postId", async (req, res) => {
-//   const { postId } = req.params;
+router.get("/posts/:postId", async (req, res) => {
+  const { postId } = req.params;
 
-//   try {
-//     const post = await Posts.findOne({ where: { postId } });
-//     if (!post) {
-//       return res
-//         .status(400)
-//         .json({ errorMessage: "게시글이 존재하지 않습니다." });
-//     }
-//     return res.json({ post: post });
-//   } catch (err) {
-//     return res
-//       .status(400)
-//       .json({ errorMessage: "게시글 조회에 실패하였습니다." });
-//   }
-// });
+  try {
+    const post = await Posts.findOne({ where: { postId } });
+    if (!post) {
+      return res
+        .status(400)
+        .json({ errorMessage: "게시글이 존재하지 않습니다." });
+    }
+    return res.json({ post: post });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ errorMessage: "게시글 조회에 실패하였습니다." });
+  }
+});
 
 //게시글 수정 API
 router.put("/posts/:postId", authMiddleware, async (req, res) => {
@@ -245,7 +245,7 @@ router.put("/posts/:postId/like", authMiddleware, async (req, res) => {
 });
 
 //좋아요 GET
-router.get("/posts/like", authMiddleware, async (req, res) => {
+router.get("/like", authMiddleware, async (req, res) => {
   const { userId } = res.locals.user;
   try {
     const likeUser = await Likes.findAll({
